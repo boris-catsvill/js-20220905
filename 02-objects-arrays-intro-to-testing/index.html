@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+
+<script>
+const arr = [{ name: []}, { name: 'Peter'}, { name: 'Bob'}];
+const copy = arr.map(item => ({...item}));
+
+console.error(arr === copy); // false
+console.error(arr[0] === copy[0]); // false
+</script>
