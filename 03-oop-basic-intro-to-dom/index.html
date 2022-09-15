@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<meta charset="UTF-8" />
+
+<link rel="stylesheet" type="text/css" href="./1-column-chart/src/style.css" />
+
+<body>
+  <div id="root"></div>
+</body>
+
+<script type="module">
+  class Component {
+    constructor(title, data) {
+      this.title = title;
+      this.data = data;
+    }
+
+    getDataList () {
+      return this.data.map(item => `<li>${item}</li>`).join('');
+    }
+
+    get template () {
+      return `
+        <div>
+          <h1>${this.title}</h1>
+          <ul>
+            ${this.getDataList()}
+          </ul>
+        </div>
+      `;
+    }
+
+    render () {
+      const wrapper = document.createElement('div');
+
+      wrapper.innerHTML = this.template;
+
+      return wrapper.firstElementChild;
+    }
+
+    destroy () {
+
+    }
+    remove () {
+
+    }
+  }
+
+  const obj = new Component('some title', ['a', 'b', 'c']);
+  const domElement = obj.render();
+
+  const rootElement = document.querySelector('#root');
+
+  console.error(rootElement);
+  console.error(domElement);
+
+  rootElement.append(domElement);
+</script>
