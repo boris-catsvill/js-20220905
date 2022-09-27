@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<meta charset="UTF-8" />
+
+<body>
+  <div id="root"></div>
+</body>
+
+<script>
+  class DefaultComponent {
+    static getTitle = () => {
+      console.error(this.remove); // this === DefaultComponent
+      return 'my favorite component';
+    };
+
+    constructor(message) {
+      console.error(DefaultComponent.getTitle());
+    }
+
+    static getSubElements () {
+      // ... logic
+    }
+
+    static foo () {
+
+    }
+
+    static bar () {
+
+    }
+
+    riba = () => {
+
+    }
+
+    remove () {
+      console.error('parent remove');
+      this.element?.remove();
+    }
+
+    destroy () {
+      /// ... some logic
+      this.remove();
+    }
+  }
+
+  class Notification extends DefaultComponent {
+    constructor(message, duration) {
+      super(message);
+
+      this.message = message;
+      this.duration = duration;
+    }
+
+    render () {
+      // logic
+    }
+
+    remove () {
+      console.error('method "remove" was called');
+    }
+  }
+
+  const notification = new Notification('hello', 3000);
+
+  console.error(notification);
+  console.error(DefaultComponent.getTitle());
+  console.error(Notification.getTitle());
+</script>
