@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+
+<body>
+  <button id="btn">Click me!</button>
+
+  <script type="module">
+    // use strict
+    // import/export
+
+    async function load () {
+      const p1 = await fetch('https://jsonplaceholder.typicode.com/todos/1'); // pause product
+      const p2 = await fetch('https://jsonplaceholder.typicode.com/todos/2'); // pause categories
+
+      return await Promise.all([p1, p2]);
+    }
+
+    const result = await load();
+
+    console.error(result);
+  </script>
+</body>
