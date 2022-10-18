@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+
+<button id="btn">Click me!</button>
+
+<script>
+  function loadData() {
+    return fetch('https://jsonplaceholder.typicode.com/todos/1')
+      .then(response => response.json())
+      .then(json => {
+        console.log(json);
+        throw 1;
+      })
+      .catch(error => {
+        console.error(error);
+        // LOG error to Sentry
+        throw new Error(error);
+      });
+  }
+
+  // component #1
+  loadData()
+    .catch(() => {
+      // NotificationMessage
+    })// Promise
+
+  // component #2
+  loadData()
+    .catch(() => {
+      // TableComponent
+    })// Promise
+</script>

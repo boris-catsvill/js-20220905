@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+
+<body>
+<button id="btn">click me maybe!?</button>
+
+<script type="module">
+
+  // btn.js
+  btn.addEventListener('click', () => {
+    const event = new CustomEvent('range-changed', {
+      detail: {
+        from: 1,
+        to: 2
+      },
+      bubbles: true
+    });
+
+    btn.dispatchEvent(event);
+  });
+
+
+  // component.js
+  class Component {
+    constructor() {
+      this.listenEvents();
+    }
+
+    listenEvents () {
+      document.addEventListener('range-changed', event => {
+        console.error('event', event);
+      });
+    }
+  }
+
+  const component = new Component();
+</script>
+
+</body>
+
+
+
+

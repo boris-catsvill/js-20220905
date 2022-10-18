@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+
+<!--<script src="index.js"></script>-->
+
+<script>
+  const reduceToObject = (orders = []) => {
+    const products = {
+      pId1: { name: "Big Mac", price: 90 },
+      pId2: { name: "Big Tasty", price: 120 },
+      pId3: { name: "Mc Chicken", price: 60 },
+      pId4: { name: "Fille O Fish", price: 45 },
+    };
+
+    return orders.reduce((result, orderProducts) => {
+      // Тут використовуться деструктуризація
+      // Почитати про це детальніше можна тут: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
+
+      // Беремо всі ідентифікатори продуктів у замовленні
+      const productsIds = Object.keys(orderProducts);
+
+      // Потрібно пройтися по кожному продукту в замовленні
+      for (let i = 0; i < productsIds.length; i += 1) {
+        // Ідентифікатор продукт
+        const pId = productsIds[i];
+        // Беремо ціну продукта
+        const { price } = products[pId]; // Те саме: `const price = products[pId].price`
+
+        // Якщо у фінальному об'єкті ще немає запису цього продукта,
+        // то ми його записуємо із значенням "0"
+        if (!result[pId]) {
+          result[pId] = 0;
+        }
+        // Добавляємо суму з цього замовлення у фінальний об'єкт
+        result[pId] += price * orderProducts[pId]; // Ціна помножена на кількість замовлених штук
+      }
+
+      return result;
+    }, {});
+  };
+
+  const orders = [
+    { pId1: 1, pId2: 1 },
+    { pId3: 2, pId4: 1 },
+    { pId3: 1, pId1: 2 },
+    { pId2: 2, pId1: 3 },
+    { pId4: 2, pId3: 1 },
+  ];
+
+  const aggregatedOrders = {
+    pId1: 6,
+    pId2: 3,
+    pId3: 4,
+    pId4: 3
+  };
+
+  const products = {
+    pId1: { name: "Big Mac", price: 90 },
+    pId2: { name: "Big Tasty", price: 120 },
+    pId3: { name: "Mc Chicken", price: 60 },
+    pId4: { name: "Fille O Fish", price: 45 },
+  };
+
+  // TODO: merge aggregatedOrders with products by "price" field
+
+  const result = reduceToObject(orders);
+
+  const flatArrayOfObjects = (arr = []) => {
+    const result = {};
+
+    for (const obj of arr) {
+      const keys = Object.keys(obj);
+
+      for (const key of keys) {
+        if (result[key]) {
+          result[key] += obj[key];
+        } else {
+          result[key] = obj[key];
+        }
+      }
+    }
+
+    return result;
+  };
+
+  console.error(result);
+
+  const flatOrders = flatArrayOfObjects(orders);
+
+  console.error('flatOrders', flatOrders);
+
+  //
+  const mapObjects = (obj1, obj2, callback) => {
+    for (const [key, value] of Object.entries(obj1)) {
+      // console.error('key', key);
+      // console.error('value', value);
+
+      const result = callback(obj2[key], value.price);
+
+      console.error('result', result);
+    }
+  };
+
+  mapObjects(products, flatOrders, (value1, value2) => {
+    // console.error('value1', value1);
+    // console.error('value2', value2);
+
+    return value1 * value2;
+  });
+  // const map
+
+</script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+
+<button id="taskBtn">Run task</button>
+<button id="alertBtn">Run alert</button>
+
+<script>
+ // taskBtn.addEventListener('click', event => {
+ //   console.error(event);
+ // });
+
+ // alertBtn.addEventListener('click', event => {
+ //   alert('block JS');
+ // });
+
+ // document.addEventListener('click', event => {
+ //   console.error('click to document');
+ // });
+
+ // console.error(1111);
+ // setTimeout(() => {
+ //   console.error(4444);
+ // });
+
+ // Promise.resolve()
+ //   .then(() => {
+ //     console.error(5555);
+ //   });
+
+ // queueMicrotask(() => {
+ //   console.error(3333);
+ // });
+
+  const obj = {
+    from: 0,
+    to: 10,
+    [Symbol.iterator]() {
+      return {
+        current: this.from,
+        last: this.to,
+
+        // 3. next() вызывается на каждой итерации цикла for..of
+        next() {
+          // 4. он должен вернуть значение в виде объекта {done:.., value :...}
+          if (this.current <= this.last) {
+            return { done: false, value: this.current++ };
+          } else {
+            return { done: true };
+          }
+        }
+      };
+    }
+  };
+
+ console.error(...obj);
+
+ const messageQueue = [];
+
+ let sendMessage = message => {
+   messageQueue.push(message);
+
+   if (messageQueue.length === 1) {
+     queueMicrotask(() => {
+       console.log(messageQueue);
+       messageQueue.length = 0;
+
+       // fetch("url-of-receiver", json);
+     });
+   }
+ };
+
+ console.error(1111);
+ sendMessage('foo');
+ console.error(2222);
+ sendMessage('bar');
+ console.error(3333);
+
+</script>
+</body>
+</html>
